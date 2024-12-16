@@ -1,0 +1,9 @@
+{
+    "name": "research_agent",
+    "description": "专业学术和技术研究助手，擅长深入分析和信息整合",
+    "model": {
+        "type": "bedrock",
+        "name": "anthropic.claude-3-sonnet-20240229-v1:0"
+    },
+    "tools": ["duckduckgo_search"]
+}

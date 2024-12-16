@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+
+# IDE - PyCharm
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+# AWS
+.aws/
+.aws-sam/
+samconfig.toml
+
+# Project specific
+*.log
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.coverage.*
+coverage.xml
+*.cover
+
+# System
+.DS_Store
+Thumbs.db
+
+# Local development configuration
+local_settings.py
+*.local
+config.local.json
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# Project specific - based on requirements.txt and system.config.json
+*.agent.json.local
+test-results/

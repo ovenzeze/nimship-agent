@@ -1,0 +1,5 @@
+{
+    "project_name": "nimship-agent",
+    "default_model": "anthropic.claude-instant-v1",
+    "agent_config_suffix": ".agent.json"
+}
