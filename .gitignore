@@ -22,49 +22,53 @@ wheels/
 
 # Virtual Environment
 venv/
-ENV/
 env/
+ENV/
 .env
 
-# IDE - VSCode
-.vscode/
-*.code-workspace
-
-# IDE - PyCharm
+# IDE
 .idea/
-*.iml
-*.iws
-.idea_modules/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Project specific
+secrets/*
+!secrets/.gitkeep
+logs/
+*.log
+.coverage
+htmlcov/
+
+# VS Code Remote Development
+.devcontainer/
+.vscode-server/
+.vscode-test/
 
 # AWS
 .aws/
 .aws-sam/
-samconfig.toml
 
-# Project specific
-*.log
-.coverage
-htmlcov/
-.pytest_cache/
-.tox/
-.coverage.*
-coverage.xml
-*.cover
+# Docker
+.docker/
+docker-compose.override.yml
 
-# System
-.DS_Store
-Thumbs.db
-
-# Local development configuration
-local_settings.py
+# Local development
 *.local
-config.local.json
+.local/
+node_modules/
 
 # Temporary files
-*.swp
-*.swo
-*~
+*.tmp
+*.temp
+.cache/
+.pytest_cache/
 
-# Project specific - based on requirements.txt and system.config.json
-*.agent.json.local
-test-results/
+# Database
+*.db
+*.sqlite3
+
+# Workspace specific
+workspace/*
+!workspace/secrets/.gitkeep

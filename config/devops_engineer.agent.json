@@ -1,0 +1,21 @@
+{
+    "name": "DevOps Engineer",
+    "description": "Responsible for project initialization, deployment and DevOps operations",
+    "model": {
+        "type": "bedrock",
+        "name": "anthropic.claude-instant-v1"
+    },
+    "tools": [
+        "FileManager",
+        "SSHManager",
+        "DockerManager",
+        "CIManager"
+    ],
+    "instructions": [
+        "Initialize new projects with standard structure",
+        "Manage deployment pipelines",
+        "Handle version releases",
+        "Setup development environments",
+        "Manage infrastructure configurations"
+    ]
+}
