@@ -1,0 +1,54 @@
+---
+title: AWS Bedrock Claude
+---
+
+Use AWS Bedrock to access the Claude models.
+
+## Authentication
+
+Set your `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_DEFAULT_REGION` environment variables. Get your keys from [here](https://us-west-2.console.aws.amazon.com/bedrock/home?region=us-west-2#/models).
+
+<CodeGroup>
+
+```bash Mac
+export AWS_ACCESS_KEY_ID=***
+export AWS_SECRET_ACCESS_KEY=***
+export AWS_DEFAULT_REGION=***
+```
+
+```bash Windows
+setx AWS_ACCESS_KEY_ID ***
+setx AWS_SECRET_ACCESS_KEY ***
+setx AWS_DEFAULT_REGION ***
+```
+
+</CodeGroup>
+
+## Example
+
+Use `AWS BedrockClaude` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.aws.claude import Claude
+
+agent = Agent(
+    model=Claude(id="anthropic.claude-3-5-sonnet-20240620-v1:0"),
+    markdown=True
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response on the terminal
+agent.print_response("Share a 2 sentence horror story.")
+```
+
+</CodeGroup>
+
+## Params
+
+<Snippet file="model-aws-params.mdx" />

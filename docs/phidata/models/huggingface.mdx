@@ -1,0 +1,51 @@
+---
+title: HuggingFace
+---
+
+## Authentication
+
+Set your `HF_TOKEN` environment. You can get one [from HuggingFace here](https://huggingface.co/settings/tokens).
+
+<CodeGroup>
+
+```bash Mac
+export HF_TOKEN=***
+```
+
+```bash Windows
+setx HF_TOKEN ***
+```
+
+</CodeGroup>
+
+## Example
+
+Use `HuggingFace` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.huggingface import HuggingFaceChat
+
+agent = Agent(
+    model=HuggingFaceChat(
+        id="meta-llama/Meta-Llama-3-8B-Instruct",
+        max_tokens=4096,
+    ),
+    markdown=True
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response on the terminal
+agent.print_response("Share a 2 sentence horror story.")
+```
+
+</CodeGroup>
+
+## Params
+
+<Snippet file="model-hf-params.mdx" />

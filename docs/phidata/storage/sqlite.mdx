@@ -1,0 +1,29 @@
+---
+title: Sqlite Agent Storage
+sidebarTitle: Sqlite
+---
+
+Phidata supports using Sqlite as a storage backend for Agents using the `SqlAgentStorage` class.
+
+## Usage
+
+You need to provide either `db_url`, `db_file` or `db_engine`. The following example uses `db_file`.
+
+```python storage.py
+from phi.storage.agent.sqlite import SqlAgentStorage
+
+# Create a storage backend using the Sqlite database
+storage = SqlAgentStorage(
+    # store sessions in the ai.sessions table
+    table_name="agent_sessions",
+    # db_file: Sqlite database file
+    db_file="tmp/data.db",
+)
+
+# Add storage to the Agent
+agent = Agent(storage=storage)
+```
+
+## Params
+
+<Snippet file="storage-sqlite-params.mdx" />

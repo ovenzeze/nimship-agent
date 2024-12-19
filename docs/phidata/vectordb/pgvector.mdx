@@ -1,0 +1,52 @@
+---
+title: PgVector Agent Knowledge
+sidebarTitle: PgVector
+---
+
+## Setup
+
+```shell
+docker run -d \
+  -e POSTGRES_DB=ai \
+  -e POSTGRES_USER=ai \
+  -e POSTGRES_PASSWORD=ai \
+  -e PGDATA=/var/lib/postgresql/data/pgdata \
+  -v pgvolume:/var/lib/postgresql/data \
+  -p 5532:5432 \
+  --name pgvector \
+  phidata/pgvector:16
+```
+
+## Example
+
+```python agent_with_knowledge.py
+from phi.agent import Agent
+from phi.model.openai import OpenAIChat
+from phi.knowledge.pdf import PDFUrlKnowledgeBase
+from phi.vectordb.pgvector import PgVector, SearchType
+
+db_url = "postgresql+psycopg://ai:ai@localhost:5532/ai"
+knowledge_base = PDFUrlKnowledgeBase(
+    urls=["https://phi-public.s3.amazonaws.com/recipes/ThaiRecipes.pdf"],
+    vector_db=PgVector(table_name="recipes", db_url=db_url, search_type=SearchType.hybrid),
+)
+# Load the knowledge base: Comment out after first run
+knowledge_base.load(recreate=True, upsert=True)
+
+agent = Agent(
+    model=OpenAIChat(id="gpt-4o"),
+    knowledge=knowledge_base,
+    # Add a tool to read chat history.
+    read_chat_history=True,
+    show_tool_calls=True,
+    markdown=True,
+    # debug_mode=True,
+)
+agent.print_response("How do I make chicken and galangal in coconut milk soup", stream=True)
+agent.print_response("What was my last question?", stream=True)
+
+```
+
+## PgVector Params
+
+<Snippet file="vectordb_pgvector_params.mdx" />

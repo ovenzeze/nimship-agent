@@ -1,0 +1,51 @@
+---
+title: Cohere
+---
+
+Leverage Cohere's powerful command models and more.
+
+## Authentication
+
+Set your `CO_API_KEY` environment variable. Get your key from [here](https://dashboard.cohere.com/api-keys).
+
+<CodeGroup>
+
+```bash Mac
+export CO_API_KEY=***
+```
+
+```bash Windows
+setx CO_API_KEY ***
+```
+
+</CodeGroup>
+
+## Example
+
+Use `CohereChat` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.cohere import CohereChat
+
+agent = Agent(
+    model=CohereChat(id="command-r-08-2024"),
+    markdown=True
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response in the terminal
+agent.print_response("Share a 2 sentence horror story.")
+
+```
+
+</CodeGroup>
+
+## Params
+
+<Snippet file="model-cohere-params.mdx" />

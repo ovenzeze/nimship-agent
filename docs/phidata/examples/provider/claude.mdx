@@ -1,0 +1,64 @@
+---
+title: Claude
+---
+
+## Example
+
+Use `Claude` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.anthropic import Claude
+
+agent = Agent(
+    model=Claude(id="claude-3-5-sonnet-20240620"),
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response on the terminal
+agent.print_response("Share a 2 sentence horror story.")
+```
+
+</CodeGroup>
+
+## Usage
+
+You can get your API key [from Anthropic here](https://anthropic.com/).
+
+<Steps>
+  <Snippet file="create-venv-step.mdx" />
+
+  <Step title="Install libraries">
+
+    ```bash
+    pip install -U anthropic phidata
+    ```
+
+  </Step>
+
+  <Step title="Export `ANTHROPIC_API_KEY`">
+
+    ```bash
+    export ANTHROPIC_API_KEY=xxx
+    ```
+
+  </Step>
+
+  <Step title="Run Claude Agent">
+
+    ```bash
+    python cookbook/providers/claude/basic.py
+    ```
+
+  </Step>
+
+  </Steps>
+
+## Information
+
+- View on [Github](https://github.com/phidatahq/phidata/tree/main/cookbook/providers/claude/basic.py)

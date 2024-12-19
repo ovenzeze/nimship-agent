@@ -1,0 +1,48 @@
+---
+title: Ollama
+---
+
+Run Large Language Models locally with Ollama
+
+[Ollama](https://ollama.com) is a fantastic tool for running models locally. Install [ollama](https://ollama.com) and run a model using
+
+<CodeGroup>
+
+```bash run model
+ollama run llama3.1
+```
+
+```bash serve
+ollama serve
+```
+
+</CodeGroup>
+
+After you have the local model running, use the `Ollama` model to access them
+
+## Example
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.ollama import Ollama
+
+agent = Agent(
+    model=Ollama(id="llama3.1"),
+    markdown=True
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response in the terminal
+agent.print_response("Share a 2 sentence horror story.")
+```
+
+</CodeGroup>
+
+## Params
+
+<Snippet file="model-ollama-params.mdx" />

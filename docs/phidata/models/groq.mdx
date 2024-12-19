@@ -1,0 +1,51 @@
+---
+title: Groq
+---
+
+Groq offers blazing-fast API endpoints for large language models
+
+## Authentication
+
+Set your `GROQ_API_KEY` environment variable. Get your key from [here](https://console.groq.com/keys).
+
+<CodeGroup>
+
+```bash Mac
+export GROQ_API_KEY=***
+```
+
+```bash Windows
+setx GROQ_API_KEY ***
+```
+
+</CodeGroup>
+
+## Example
+
+Use `Groq` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.groq import Groq
+
+agent = Agent(
+    model=Groq(id="llama3-groq-70b-8192-tool-use-preview"),
+    markdown=True
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response in the terminal
+agent.print_response("Share a 2 sentence horror story.")
+
+```
+
+</CodeGroup>
+
+## Params
+
+<Snippet file="model-groq-params.mdx" />

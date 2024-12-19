@@ -1,0 +1,54 @@
+---
+title: OpenAI
+---
+
+The GPT models are the best in class LLMs and used as the default LLM by **Agents**.
+
+## Authentication
+
+Set your `OPENAI_API_KEY` environment variable. You can get one [from OpenAI here](https://platform.openai.com/account/api-keys).
+
+<CodeGroup>
+
+```bash Mac
+export OPENAI_API_KEY=sk-***
+```
+
+```bash Windows
+setx OPENAI_API_KEY sk-***
+```
+
+</CodeGroup>
+
+## Example
+
+Use `OpenAIChat` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+
+from phi.agent import Agent, RunResponse
+from phi.model.openai import OpenAIChat
+
+agent = Agent(
+    model=OpenAIChat(id="gpt-4o"),
+    markdown=True
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response in the terminal
+agent.print_response("Share a 2 sentence horror story.")
+
+```
+
+</CodeGroup>
+
+## Params
+
+For more information, please refer to the [OpenAI docs](https://platform.openai.com/docs/api-reference/chat/create) as well.
+
+<Snippet file="model-openai-params.mdx" />

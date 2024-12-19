@@ -1,0 +1,38 @@
+---
+title: File
+---
+
+**FileTools** enable an Agent to read and write files on the local file system.
+
+## Example
+
+The following agent will generate an answer and save it in a file.
+
+```python cookbook/tools/file_tools.py
+from phi.agent import Agent
+from phi.tools.file import FileTools
+
+agent = Agent(tools=[FileTools()], show_tool_calls=True)
+agent.print_response("What is the most advanced LLM currently? Save the answer to a file.", markdown=True)
+```
+
+## Toolkit Params
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `base_dir` | `Path` | - | Specifies the base directory path for file operations. |
+| `save_files` | `bool` | `True` | Determines whether files should be saved during the operation. |
+| `read_files` | `bool` | `True` | Allows reading from files during the operation. |
+| `list_files` | `bool` | `True` | Enables listing of files in the specified directory. |
+
+## Toolkit Functions
+
+| Name | Description |
+|------|-------------|
+| `save_file` | Saves the contents to a file called `file_name` and returns the file name if successful. |
+| `read_file` | Reads the contents of the file `file_name` and returns the contents if successful. |
+| `list_files` | Returns a list of files in the base directory |
+
+## Information
+
+- View on [Github](https://github.com/phidatahq/phidata/blob/main/phi/tools/file.py)

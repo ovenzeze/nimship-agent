@@ -1,0 +1,53 @@
+---
+title: OpenRouter
+---
+
+OpenRouter is a platform for providing endpoints for Large Language models.
+
+## Authentication
+
+Set your `OPENROUTER_API_KEY` environment variable. Get your key from [here](https://openrouter.ai/settings/keys).
+
+<CodeGroup>
+
+```bash Mac
+export OPENROUTER_API_KEY=***
+```
+
+```bash Windows
+setx OPENROUTER_API_KEY ***
+```
+
+</CodeGroup>
+
+## Example
+
+Use `OpenRouter` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.openrouter import OpenRouter
+
+agent = Agent(
+    model=OpenRouter(id="gpt-4o"),
+    markdown=True
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response in the terminal
+agent.print_response("Share a 2 sentence horror story.")
+
+```
+
+</CodeGroup>
+
+## Params
+
+<Snippet file="model-openrouter-params.mdx" />
+
+OpenRouter also supports the params of [OpenAI](/models/openai).

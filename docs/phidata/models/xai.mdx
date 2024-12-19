@@ -1,0 +1,58 @@
+---
+title: xAI
+---
+
+xAI is a platform for providing endpoints for Large Language models.
+
+## Authentication
+
+Set your `XAI_API_KEY` environment variable. You can get one [from xAI here](https://console.x.ai/).
+
+<CodeGroup>
+
+```bash Mac
+export XAI_API_KEY=sk-***
+```
+
+```bash Windows
+setx XAI_API_KEY sk-***
+```
+
+</CodeGroup>
+
+## Example
+
+Use `xAI` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+
+from phi.agent import Agent, RunResponse
+from phi.model.xai import xAI
+
+agent = Agent(
+    model=xAI(id="grok-beta"),
+    markdown=True
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response in the terminal
+agent.print_response("Share a 2 sentence horror story.")
+
+```
+
+</CodeGroup>
+
+## Params
+
+For more information, please refer to the [xAI docs](https://docs.x.ai/docs) as well.
+
+## Params
+
+<Snippet file="model-xai-params.mdx" />
+
+xAI also supports the params of [OpenAI](/models/openai).

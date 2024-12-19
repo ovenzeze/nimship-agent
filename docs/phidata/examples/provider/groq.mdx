@@ -1,0 +1,63 @@
+---
+title: Groq
+---
+
+## Example
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.groq import Groq
+
+agent = Agent(
+    model=Groq(id="llama3-groq-70b-8192-tool-use-preview"),
+)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response in the terminal
+agent.print_response("Share a 2 sentence horror story.")
+
+```
+
+</CodeGroup>
+
+## Usage
+
+Get your key from [here](https://console.groq.com/keys).
+
+<Steps>
+  <Snippet file="create-venv-step.mdx" />
+
+  <Step title="Install libraries">
+
+    ```bash
+    pip install -U groq phidata
+    ```
+
+  </Step>
+
+  <Step title="Export `GROQ_API_KEY`">
+
+    ```bash
+    export GROQ_API_KEY=xxx
+    ```
+
+  </Step>
+
+  <Step title="Run Groq Agent">
+
+    ```bash
+    python cookbook/providers/groq/basic.py
+    ```
+
+  </Step>
+
+  </Steps>
+
+## Information
+
+- View on [Github](https://github.com/phidatahq/phidata/tree/main/cookbook/providers/groq/basic.py)

@@ -1,0 +1,50 @@
+---
+title: DeepSeek
+---
+
+DeepSeek is a platform for providing endpoints for Large Language models.
+
+## Authentication
+
+Set your `DEEPSEEK_API_KEY` environment variable. Get your key from [here](https://platform.deepseek.com/api_keys).
+
+<CodeGroup>
+
+```bash Mac
+export DEEPSEEK_API_KEY=***
+```
+
+```bash Windows
+setx DEEPSEEK_API_KEY ***
+```
+
+</CodeGroup>
+
+## Example
+
+Use `DeepSeek` with your `Agent`:
+
+<CodeGroup>
+
+```python agent.py
+from phi.agent import Agent, RunResponse
+from phi.model.deepseek import DeepSeekChat
+
+agent = Agent(model=DeepSeekChat(), markdown=True)
+
+# Get the response in a variable
+# run: RunResponse = agent.run("Share a 2 sentence horror story.")
+# print(run.content)
+
+# Print the response in the terminal
+agent.print_response("Share a 2 sentence horror story.")
+
+```
+
+</CodeGroup>
+
+## Params
+
+<Snippet file="model-deepseek-params.mdx" />
+
+DeepSeek also supports the params of [OpenAI](/models/openai).

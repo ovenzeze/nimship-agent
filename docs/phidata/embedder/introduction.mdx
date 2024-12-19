@@ -1,0 +1,41 @@
+---
+title: Introduction
+---
+
+An Embedder converts complex information into vector representations, allowing it to be stored in a vector database. By transforming data into embeddings, the embedder enables efficient searching and retrieval of contextually relevant information. This process enhances the responses of language models by providing them with the necessary business context, ensuring they are context-aware. Phidata uses `OpenAIEmbedder` as the default embedder, but other embedders are supported as well. Here is an example:
+
+```python
+from phi.agent import Agent, AgentKnowledge
+from phi.vectordb.pgvector import PgVector
+from phi.embedder.openai import OpenAIEmbedder
+
+# Create knowledge base
+knowledge_base=AgentKnowledge(
+    vector_db=PgVector(
+        db_url=db_url,
+        table_name=embeddings_table,
+        embedder=OpenAIEmbedder(),
+    ),
+    # 2 references are added to the prompt
+    num_documents=2,
+),
+
+# Add information to the knowledge base
+knowledge_base.load_text("The sky is blue")
+
+# Add the knowledge base to the Agent
+agent = Agent(knowledge_base=knowledge_base)
+```
+
+The following embedders are supported:
+
+- [OpenAI](/embedder/openai)
+- [Gemini](/embedder/gemini)
+- [Ollama](/embedder/ollama)
+- [Voyage AI](/embedder/voyageai)
+- [Azure OpenAI](/embedder/azure_openai)
+- [Mistral](/embedder/mistral)
+- [Fireworks](/embedder/fireworks)
+- [Together](/embedder/together)
+- [HuggingFace](/embedder/huggingface)
+- [Qdrant FastEmbed](/embedder/qdrant_fastembed)
