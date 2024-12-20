@@ -12,8 +12,8 @@ payload = {
     "model_name": "Titan Text Large",
     "litellm_params": {
         "custom_llm_provider": "Amazon",
-        "aws_access_key_id": "***REMOVED***",
-        "aws_secret_access_key": "***REMOVED***",
+        "aws_access_key_id": "YOUR_AWS_ACCESS_KEY_ID",
+        "aws_secret_access_key": "YOUR_AWS_SECRET_ACCESS_KEY",
         "aws_region_name": "us-east-1",
         "model": "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-tg1-large",
         "timeout": 60,
