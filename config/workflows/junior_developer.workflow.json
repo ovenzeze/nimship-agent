@@ -5,24 +5,25 @@
         {
             "id": "product_manager",
             "name": "Product Manager",
-            "config_path": "config/product_manager.agent.json"
+            "config_path": "config/workflows/product_manager.agent.json"
         },
         {
             "id": "tech_leader",
             "name": "Tech Leader",
-            "config_path": "config/tech_leader.agent.json"
+            "config_path": "config/workflows/tech_leader.agent.json"
         },
         {
             "id": "engineer",
             "name": "Senior Engineer",
-            "config_path": "config/engineer.agent.json"
+            "config_path": "config/workflows/engineer.agent.json"
         },
         {
             "id": "qa_engineer",
             "name": "QA Engineer",
-            "config_path": "config/qa_engineer.agent.json"
+            "config_path": "config/workflows/qa_engineer.agent.json"
         }
     ],
+
     "state_data": {
         "init": {
             "required_fields": ["project_name", "project_description"],
