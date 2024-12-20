@@ -5,9 +5,4 @@ openai
 anthropic
 duckduckgo-search
 python-dotenv
-
-# AWS Bedrock 相关依赖
-awscli
-
-# 确保 phiData 的监控和调试功能正常工作
 rich  # 提供更好的终端输出

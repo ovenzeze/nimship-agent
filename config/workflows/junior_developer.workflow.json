@@ -1,0 +1,131 @@
+{
+    "name": "junior_developer_workflow",
+    "description": "适合初级开发者的简化版开发工作流，用于流程控制器测试",
+    "agents": [
+        {
+            "id": "product_manager",
+            "name": "Product Manager",
+            "config_path": "config/product_manager.agent.json"
+        },
+        {
+            "id": "tech_leader",
+            "name": "Tech Leader",
+            "config_path": "config/tech_leader.agent.json"
+        },
+        {
+            "id": "engineer",
+            "name": "Senior Engineer",
+            "config_path": "config/engineer.agent.json"
+        },
+        {
+            "id": "qa_engineer",
+            "name": "QA Engineer",
+            "config_path": "config/qa_engineer.agent.json"
+        }
+    ],
+    "state_data": {
+        "init": {
+            "required_fields": ["project_name", "project_description"],
+            "optional_fields": ["team_members", "timeline"]
+        },
+        "requirement": {
+            "required_fields": ["user_stories", "acceptance_criteria"],
+            "optional_fields": ["technical_constraints", "performance_requirements"]
+        },
+        "technical": {
+            "required_fields": ["technical_design", "implementation_plan"],
+            "optional_fields": ["architecture_diagram", "tech_stack"]
+        },
+        "development": {
+            "required_fields": ["code_complete", "unit_tests"],
+            "optional_fields": ["documentation", "performance_metrics"]
+        },
+        "testing": {
+            "required_fields": ["test_results", "bug_report"],
+            "optional_fields": ["test_coverage", "performance_report"]
+        },
+        "completed": {
+            "required_fields": ["final_report"],
+            "optional_fields": ["lessons_learned", "future_improvements"]
+        }
+    },
+    "initial_state": "init",
+    "transitions": [
+        {
+            "from_state": "init",
+            "to_state": "requirement",
+            "condition": "project_started",
+            "agent_id": "product_manager",
+            "validations": {
+                "basic": {
+                    "type": "field_check",
+                    "fields": ["project_name", "project_description"]
+                }
+            }
+        },
+        {
+            "from_state": "requirement",
+            "to_state": "technical",
+            "condition": "requirements_completed",
+            "agent_id": "tech_leader",
+            "validations": {
+                "basic": {
+                    "type": "field_check",
+                    "fields": ["user_stories", "acceptance_criteria"]
+                },
+                "ai_review": {
+                    "type": "quality_check",
+                    "aspects": ["clarity", "completeness"]
+                }
+            }
+        },
+        {
+            "from_state": "technical",
+            "to_state": "development",
+            "condition": "design_approved",
+            "agent_id": "engineer",
+            "validations": {
+                "basic": {
+                    "type": "field_check",
+                    "fields": ["technical_design", "implementation_plan"]
+                },
+                "ai_review": {
+                    "type": "feasibility_check",
+                    "aspects": ["technical_feasibility", "risk_assessment"]
+                }
+            }
+        },
+        {
+            "from_state": "development",
+            "to_state": "testing",
+            "condition": "development_completed",
+            "agent_id": "qa_engineer",
+            "validations": {
+                "basic": {
+                    "type": "field_check",
+                    "fields": ["code_complete", "unit_tests"]
+                },
+                "ai_review": {
+                    "type": "code_quality_check",
+                    "aspects": ["code_quality", "test_coverage"]
+                }
+            }
+        },
+        {
+            "from_state": "testing",
+            "to_state": "completed",
+            "condition": "tests_passed",
+            "agent_id": "product_manager",
+            "validations": {
+                "basic": {
+                    "type": "field_check",
+                    "fields": ["test_results", "bug_report"]
+                },
+                "ai_review": {
+                    "type": "acceptance_check",
+                    "aspects": ["requirements_met", "quality_acceptable"]
+                }
+            }
+        }
+    ]
+}

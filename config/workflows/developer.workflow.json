@@ -1,0 +1,77 @@
+{
+    "name": "development_workflow",
+    "description": "Software development workflow with multiple agents",
+    "agents": [
+        {
+            "id": "product_manager",
+            "name": "Product Manager",
+            "config_path": "config/product_manager.agent.json"
+        },
+        {
+            "id": "tech_leader",
+            "name": "Tech Leader",
+            "config_path": "config/tech_leader.agent.json"
+        },
+        {
+            "id": "engineer",
+            "name": "Senior Engineer",
+            "config_path": "config/engineer.agent.json"
+        },
+        {
+            "id": "qa_engineer",
+            "name": "QA Engineer",
+            "config_path": "config/qa_engineer.agent.json"
+        }
+    ],
+    "initial_state": "init",
+    "transitions": [
+        {
+            "from_state": "init",
+            "to_state": "requirement",
+            "condition": "project_started",
+            "agent_id": "product_manager"
+        },
+        {
+            "from_state": "requirement",
+            "to_state": "technical",
+            "condition": "requirements_completed",
+            "agent_id": "tech_leader"
+        },
+        {
+            "from_state": "technical",
+            "to_state": "development",
+            "condition": "design_approved",
+            "agent_id": "engineer"
+        },
+        {
+            "from_state": "development",
+            "to_state": "testing",
+            "condition": "development_completed",
+            "agent_id": "qa_engineer"
+        },
+        {
+            "from_state": "testing",
+            "to_state": "completed",
+            "condition": "tests_passed",
+            "agent_id": "product_manager"
+        }
+    ],
+    "completion_conditions": {
+        "requirements_completed": {
+            "required_fields": ["user_stories", "acceptance_criteria"],
+            "validation": "all_fields_present"
+        },
+        "design_approved": {
+            "required_approvals": ["tech_leader"],
+            "validation": "all_approved"
+        },
+        "development_completed": {
+            "required_fields": ["code_review", "documentation"],
+            "validation": "all_fields_present"
+        },
+        "tests_passed": {
+            "required_fields": ["test_results", "bug_report"],
+            "validation": "all_tests_passed"
+        }
+    }
+}
