@@ -34,10 +34,10 @@ ENV/
 .DS_Store
 
 # Project specific
-secrets/*
-!secrets/.gitkeep
+.env
 logs/
 *.log
+output.log
 .coverage
 htmlcov/
 

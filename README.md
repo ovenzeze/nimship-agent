@@ -34,13 +34,37 @@ PhiiData 是一个用于构建 AI 应用程序的库，它提供了一组工具�
    pip install -r requirements.txt
    ```
 
+## 项目结构
+
+```
+nimship-agent/
+├── agents/
+├── config/
+├── docs/
+│   └── DOCUMENTATION_GUIDE.md
+├── scripts/
+│   └── run_agent.py
+├── tests/
+├── tools/
+│   └── litellm/
+├── utils/
+├── workflows/
+├── .env
+├── .gitignore
+├── DEV_GUIDE.md
+├── main.py
+├── playground.py
+├── README.md
+└── requirements.txt
+```
+
 ## 使用方法
 
 1. 创建或编辑 agent 配置文件（例如 `config/example_agent.config.json`）
 
 2. 运行 agent：
    ```
-   python run_agent.py config/example_agent.config.json "Your prompt here"
+   python scripts/run_agent.py config/example_agent.config.json "Your prompt here"
    ```
 
 ## 配置文件格式
@@ -64,4 +88,12 @@ agent 配置文件应包含以下字段：
  },
  "tools": ["search", "calculator"]
 }
+```
 
+## 开发指南
+
+有关开发和贡献的详细信息，请参阅项目根目录中的 `DEV_GUIDE.md` 文件。
+
+## 文档
+
+完整的文档可以在 `docs` 目录中找到。主要的文档导航文件是 [docs/DOCUMENTATION_GUIDE.md](docs/DOCUMENTATION_GUIDE.md)。
