@@ -69,20 +69,43 @@ class WorkflowController(Workflow):
         logger.info(f"Executing agent task: {agent_id}")
         try:
             agent = self.load_agent(agent_id)
+            base_data = {
+                "status": "pending",
+                "metadata": {},
+                "content": None
+            }
+            task_data.update({k: v for k, v in base_data.items() if k not in task_data})
+            
             state_data = WorkflowStateData(**task_data)
-            result = agent.run(state_data.model_dump_json(indent=2))
+            formatted_input = {
+                "role": "user",
+                "content": state_data.model_dump_json()
+            }
             
-            if hasattr(result, 'content'):
-                response = AgentResponse(content=result.content)
-                updated_data = state_data.model_copy(update={
-                    "content": response.content
-                })
-                return updated_data.model_dump()
-            return state_data.model_dump()
+            agent_result = agent.run(formatted_input)
             
+            # Handle different response types
+            if isinstance(agent_result, dict):
+                content = agent_result.get("content", "")
+            else:
+                content = str(agent_result)
+                
+            updated_data = state_data.model_copy(update={
+                "content": content,
+                "status": "success",
+                "last_updated": datetime.now().isoformat()
+            })
+
+            return updated_data.model_dump()            
         except Exception as e:
             logger.error(f"Agent task failed: {str(e)}")
-            raise
+            # Return original data with error status instead of raising
+            return {
+                **task_data,
+                "content": str(e),
+                "status": "error",
+                "last_updated": datetime.now().isoformat()
+            }
 
     def try_transition(self, to_state: str, data: Dict[str, Any]) -> bool:
         transition = self.validate_transition(to_state)
