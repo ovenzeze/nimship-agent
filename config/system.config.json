@@ -2,5 +2,11 @@
     "project_name": "nimship-agent",
     "default_model": "anthropic.claude-instant-v1",
     "agent_config_suffix": ".agent.json",
-    "workflow_config_suffix": ".workflow.json"
+    "workflow_config_suffix": ".workflow.json",
+    "paths": {
+        "agent_config_dir": "config/workflows",
+        "workflow_config_dir": "config/workflows",
+        "tools_dir": "tools",
+        "storage_dir": "tmp"
+    }
 }

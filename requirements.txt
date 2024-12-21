@@ -1,8 +1,9 @@
-phidata==2.7.2
+phidata
 boto3>=1.34.0
 botocore>=1.34.0
 openai
 anthropic
 duckduckgo-search
+pytest
 python-dotenv
 rich  # 提供更好的终端输出
