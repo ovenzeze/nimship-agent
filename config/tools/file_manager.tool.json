@@ -1,0 +1,12 @@
+{
+    "name": "FileManager",
+    "description": "Unified file operations for local and remote development",
+    "provider": "auto",
+    "capabilities": [
+        "create_file",
+        "read_file",
+        "update_file",
+        "delete_file",
+        "search_files"
+    ]
+}

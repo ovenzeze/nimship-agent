@@ -1,0 +1,10 @@
+{
+    "name": "DevOps",
+    "description": "DevOps operations for deployment and environment management",
+    "restricted": true,
+    "capabilities": [
+        "push_changes",
+        "create_pull_request",
+        "deploy_environment"
+    ]
+}

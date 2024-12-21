@@ -3,10 +3,26 @@
     "default_model": "anthropic.claude-instant-v1",
     "agent_config_suffix": ".agent.json",
     "workflow_config_suffix": ".workflow.json",
+    "tool_config_suffix": ".tool.json",
     "paths": {
-        "agent_config_dir": "config/workflows",
+        "agent_config_dir": "config/agents",
         "workflow_config_dir": "config/workflows",
+        "tool_config_dir": "config/tools",
         "tools_dir": "tools",
         "storage_dir": "tmp"
+    },
+    "tools": {
+        "file_manager": {
+            "provider": "auto",
+            "workspace_path": ".",
+            "vscode_remote_url": null
+        },
+        "git": {
+            "provider": "local"
+        },
+        "devops": {
+            "restricted": true,
+            "allowed_agents": ["devops"]
+        }
     }
 }
