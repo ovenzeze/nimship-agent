@@ -5,6 +5,7 @@
     "capabilities": [
         "push_changes",
         "create_pull_request",
-        "deploy_environment"
+        "deploy_environment",
+        "manage_remote_connection"
     ]
 }

@@ -7,6 +7,9 @@
         "read_file",
         "update_file",
         "delete_file",
-        "search_files"
+        "search_files",
+        "create_directory",
+        "move_directory",
+        "search_in_files"
     ]
 }

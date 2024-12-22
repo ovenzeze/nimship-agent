@@ -2,6 +2,8 @@ from typing import Dict, Any, List
 from phi.agent import Agent
 from utils.model_factory import load_model_from_config, load_agent_config
 from phi.tools.duckduckgo import DuckDuckGo
+from tools.file_manager import FileManagerTools
+from tools.devops import DevOpsTools
 
 class NimshipAgent(Agent):
     def __init__(self, config_path: str):
@@ -33,4 +35,8 @@ class NimshipAgent(Agent):
         for tool in tool_configs:
             if tool == "DuckDuckGo":
                 tools.append(DuckDuckGo())
+            elif tool == "FileManager":
+                tools.append(FileManagerTools())
+            elif tool == "DevOps":
+                tools.append(DevOpsTools())
         return tools

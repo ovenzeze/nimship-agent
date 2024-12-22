@@ -7,3 +7,5 @@ duckduckgo-search
 pytest
 python-dotenv
 rich  # 提供更好的终端输出
+paramiko  # 用于SSH连接
+requests  # 用于HTTP请求

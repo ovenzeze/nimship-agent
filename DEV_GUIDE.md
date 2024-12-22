@@ -48,6 +48,11 @@ Nimship Agent is a configurable AI agent framework built on phidata. This guide 
 - Modify `playground.py` to change Web UI
 - Utilize phidata's Playground component features
 
+6. **Remote Development Testing**
+- Use `tests/test_remote_development.py` for remote development tests
+- Ensure proper configuration of remote server details in `.env` file
+- Run tests using pytest and check for skipped tests due to missing dependencies
+
 ## Project Structure
 
 ```
@@ -59,6 +64,8 @@ nimship-agent/
 ├── config/                # Configurations
 │   ├── system.config.json # System config
 │   └── *.agent.json      # Agent configs
+├── tests/                 # Test files
+│   └── test_remote_development.py # Remote development tests
 ├── run_agent.py          # CLI entry
 └── playground.py         # Web UI entry
 ```
@@ -78,7 +85,9 @@ nimship-agent/
 3. **Testing and Debugging**
 - Use CLI for quick tests
 - Utilize Playground for interactive testing
+- Run pytest for comprehensive testing, including remote development tests
 - Monitor agent behavior through logs
+- Check for skipped tests and ensure all dependencies are installed
 
 ## Extension Guidelines
 
@@ -102,6 +111,7 @@ nimship-agent/
 1. Heavy dependency on phidata library - refer to phidata documentation
 2. Maintain backward compatibility when modifying core features
 3. Configuration-driven design requires stable config structure
+4. Ensure all dependencies are installed before running tests
 
 The framework is designed to enable rapid creation and customization of AI agents through configuration, while maintaining code maintainability and extensibility. Most common requirements can be implemented through configuration files, with code modifications needed only for deep customization.
 
@@ -111,5 +121,8 @@ Core dependencies:
 - phidata: AI application framework
 - fastapi: Web services
 - sqlalchemy: Data storage
+- pytest: Testing framework
+- paramiko: SSH operations for remote development tests
+- requests: HTTP operations for remote development tests
 
 This modular, configuration-driven architecture makes it easy for developers to create, modify, and extend AI agents while leveraging the robust capabilities of the phidata framework.

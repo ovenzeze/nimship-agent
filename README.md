@@ -34,6 +34,20 @@ PhiiData 是一个用于构建 AI 应用程序的库，它提供了一组工具�
    pip install -r requirements.txt
    ```
 
+   注意：确保所有依赖项都已正确安装，包括 paramiko 和 requests，这些库对于运行某些测试是必需的。
+
+## 测试
+
+运行测试套件：
+
+```
+pytest tests/
+```
+
+注意：
+- 某些测试可能需要额外的设置，如远程服务器配置。请查看 tests/test_remote_development.py 文件中的具体要求。
+- 如果 paramiko 或 requests 库未安装，相关的测试将被跳过，但不会导致测试失败。
+
 ## 项目结构
 
 ```
@@ -97,3 +111,15 @@ agent 配置文件应包含以下字段：
 ## 文档
 
 完整的文档可以在 `docs` 目录中找到。主要的文档导航文件是 [docs/DOCUMENTATION_GUIDE.md](docs/DOCUMENTATION_GUIDE.md)。
+
+## 环境配置
+
+1. 配置远程开发环境:
+   - 确保远程机器已安装VSCode Server
+   - 配置SSH密钥认证
+   - 在远程机器上配置好Git和GitHub
+
+2. 创建环境配置文件:
+   ```bash
+   cp .env.example .env
+

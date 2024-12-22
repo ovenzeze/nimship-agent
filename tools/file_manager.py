@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Union
 import re
 import os
 import glob
+import shutil
 
 
 @dataclass
@@ -17,10 +18,10 @@ class ContentMatch:
 class CodePatch:
     """代码更新补丁"""
     target_type: str  # 'function', 'class', 'block'
+    change_type: str  # 'modify', 'insert', 'delete'
     target_name: Optional[str] = None  # 函数名/类名
     before_context: Optional[str] = None  # 更改位置之前的代码
     after_context: Optional[str] = None  # 更改位置之后的代码
-    change_type: str  # 'modify', 'insert', 'delete'
     new_content: Optional[str] = None 
 
 
@@ -170,18 +171,152 @@ class GitAwareFileManager:
         return matches
 
 from .base import Tool, OperationResult
-from phi.tools.base import tool_response
+
+class LocalFileProvider:
+    def create_file(self, path: str, content: str) -> OperationResult:
+        try:
+            with open(path, 'w') as f:
+                f.write(content)
+            return OperationResult(success=True, message=f"File created at {path}")
+        except Exception as e:
+            return OperationResult(success=False, message=f"Failed to create file: {str(e)}")
+
+    def read_file(self, path: str) -> OperationResult:
+        try:
+            with open(path, 'r') as f:
+                content = f.read()
+            return OperationResult(success=True, message="File read successfully", data={"content": content})
+        except Exception as e:
+            return OperationResult(success=False, message=f"Failed to read file: {str(e)}")
+
+    def update_file(self, path: str, content: str) -> OperationResult:
+        try:
+            with open(path, 'w') as f:
+                f.write(content)
+            return OperationResult(success=True, message=f"File updated at {path}")
+        except Exception as e:
+            return OperationResult(success=False, message=f"Failed to update file: {str(e)}")
+
+    def delete_file(self, path: str) -> OperationResult:
+        try:
+            os.remove(path)
+            return OperationResult(success=True, message=f"File deleted at {path}")
+        except Exception as e:
+            return OperationResult(success=False, message=f"Failed to delete file: {str(e)}")
+
+    def search_files(self, pattern: str) -> List[str]:
+        return glob.glob(pattern, recursive=True)
+
+    def create_directory(self, path: str) -> OperationResult:
+        try:
+            os.makedirs(path, exist_ok=True)
+            return OperationResult(success=True, message=f"Directory created at {path}")
+        except Exception as e:
+            return OperationResult(success=False, message=f"Failed to create directory: {str(e)}")
+
+    def move_directory(self, src: str, dst: str) -> OperationResult:
+        try:
+            shutil.move(src, dst)
+            return OperationResult(success=True, message=f"Directory moved from {src} to {dst}")
+        except Exception as e:
+            return OperationResult(success=False, message=f"Failed to move directory: {str(e)}")
+
+    def search_in_files(self, content_pattern: str, file_pattern: Optional[str] = None) -> List[ContentMatch]:
+        matches = []
+        for file_path in self.search_files(file_pattern or "*"):
+            with open(file_path, 'r') as f:
+                for i, line in enumerate(f, 1):
+                    if re.search(content_pattern, line):
+                        matches.append(ContentMatch(
+                            path=file_path,
+                            line_number=i,
+                            content=line.strip()
+                        ))
+        return matches
+
+class VSCodeRemoteProvider:
+    # TODO: Implement VS Code Server API integration
+    def create_file(self, path: str, content: str) -> OperationResult:
+        # TODO: Implement remote file creation
+        pass
+
+    def read_file(self, path: str) -> OperationResult:
+        # TODO: Implement remote file reading
+        pass
+
+    def update_file(self, path: str, content: str) -> OperationResult:
+        # TODO: Implement remote file update
+        pass
+
+    def delete_file(self, path: str) -> OperationResult:
+        # TODO: Implement remote file deletion
+        pass
+
+    def search_files(self, pattern: str) -> List[str]:
+        # TODO: Implement remote file search
+        pass
+
+    def create_directory(self, path: str) -> OperationResult:
+        # TODO: Implement remote directory creation
+        pass
+
+    def move_directory(self, src: str, dst: str) -> OperationResult:
+        # TODO: Implement remote directory move
+        pass
+
+    def search_in_files(self, content_pattern: str, file_pattern: Optional[str] = None) -> List[ContentMatch]:
+        # TODO: Implement remote content search
+        pass
+
+class ProviderSelector:
+    @staticmethod
+    def get_provider(environment: str) -> Union[LocalFileProvider, VSCodeRemoteProvider]:
+        if environment == 'local':
+            return LocalFileProvider()
+        elif environment == 'remote':
+            return VSCodeRemoteProvider()
+        else:
+            raise ValueError(f"Unsupported environment: {environment}")
 
 class FileManagerTools(Tool):
     name: str = "FileManager"
     description: str = "Unified file operations for local and remote development"
     
-    @tool_response
+    def __init__(self, environment: str = 'local'):
+        self.environment = environment
+    
+    # TODO: Resolve the import issue for tool_response and add the decorator back
     def create_file(self, path: str, content: str) -> OperationResult:
         provider = self._get_provider()
         return provider.create_file(path, content)
         
-    @tool_response
     def read_file(self, path: str) -> OperationResult:
         provider = self._get_provider()
         return provider.read_file(path)
+
+    def update_file(self, path: str, content: str) -> OperationResult:
+        provider = self._get_provider()
+        return provider.update_file(path, content)
+
+    def delete_file(self, path: str) -> OperationResult:
+        provider = self._get_provider()
+        return provider.delete_file(path)
+
+    def search_files(self, pattern: str) -> List[str]:
+        provider = self._get_provider()
+        return provider.search_files(pattern)
+
+    def create_directory(self, path: str) -> OperationResult:
+        provider = self._get_provider()
+        return provider.create_directory(path)
+
+    def move_directory(self, src: str, dst: str) -> OperationResult:
+        provider = self._get_provider()
+        return provider.move_directory(src, dst)
+
+    def search_in_files(self, content_pattern: str, file_pattern: Optional[str] = None) -> List[ContentMatch]:
+        provider = self._get_provider()
+        return provider.search_in_files(content_pattern, file_pattern)
+
+    def _get_provider(self):
+        return ProviderSelector.get_provider(self.environment)
