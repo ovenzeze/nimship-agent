@@ -6,16 +6,24 @@
         "name": "anthropic.claude-instant-v1"
     },
     "tools": [
-        "FileManager",
-        "SSHManager",
-        "DockerManager",
-        "CIManager"
+        "DevOps"
     ],
+    "private_config": {
+        "remote": {
+            "hostname": "${NIMSHIP_REMOTE_HOSTNAME}",
+            "username": "${NIMSHIP_REMOTE_USER}",
+            "port": "${NIMSHIP_REMOTE_PORT}",
+            "workspace_path": "~/workspace"
+        },
+        "project": {
+            "repo_url": "${NIMSHIP_GITHUB_REPO}",
+            "branch": "main"
+        }
+    },
     "instructions": [
-        "Initialize new projects with standard structure",
-        "Manage deployment pipelines",
-        "Handle version releases",
-        "Setup development environments",
-        "Manage infrastructure configurations"
+        "Initialize and verify remote development environments",
+        "Manage workspace setup and cleanup",
+        "Monitor connection status",
+        "Diagnose environment issues"
     ]
 }

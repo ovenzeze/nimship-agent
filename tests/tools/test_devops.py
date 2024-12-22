@@ -1,37 +1,78 @@
 import pytest
-from unittest.mock import patch, MagicMock
-from tools.devops import DevOpsTools
-import tempfile
-import os
+from tools.devops import DevOpsTools, RemoteConfig, ProjectConfig
+from tools.base import OperationResult
+from unittest.mock import patch
 
-@pytest.fixture
-def devops_tools():
-    return DevOpsTools()
 
 class TestDevOps:
     @pytest.fixture
-    def dev_env(self):
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            yield tmpdirname
-            
-    def test_push_operations(self, devops_tools):
-        with patch.object(DevOpsTools, 'push_changes') as mock_push:
-            mock_push.return_value = MagicMock(success=True)
-            
-            # 测试代码推送
-            result = devops_tools.push_changes('origin', 'main')
+    def devops_tools(self):
+        return DevOpsTools()
+
+    @pytest.fixture
+    def remote_config(self):
+        return RemoteConfig(
+            hostname="test-host",
+            username="test-user",
+            port=22,
+            workspace_path="/test/workspace"
+        )
+
+    @pytest.fixture
+    def project_config(self):
+        return ProjectConfig(
+            repo_url="https://github.com/test/repo.git",
+            branch="main"
+        )
+
+    def test_command_retry(self, devops_tools, remote_config):
+        # Test retry mechanism for command execution
+        with patch.object(devops_tools, '_execute_command') as mock_execute:
+            mock_execute.side_effect = [
+                OperationResult(success=False, message="First attempt failed"),
+                OperationResult(success=True, data={"output": "success"})
+            ]
+
+            result = devops_tools._execute_command_with_retry(["test", "command"], max_retries=2)
             assert result.success
+            assert mock_execute.call_count == 2
 
-    def test_deploy_operations(self, dev_env):
-        devops_tools = DevOpsTools()
-        
-        # 测试环境部署
-        result = devops_tools.deploy_environment("test")
-        assert result.success is False  # 因为这是未实现的功能
-        assert "not implemented" in result.message.lower()
+    def test_cleanup_workspace(self, devops_tools, remote_config):
+        # Test workspace cleanup functionality
+        with patch.object(devops_tools, '_execute_command') as mock_execute:
+            mock_execute.side_effect = [
+                OperationResult(success=True),
+                OperationResult(success=True)
+            ]
 
-    def test_remote_operations(self, devops_tools):
-        # 测试远程连接管理
-        result = devops_tools.manage_remote_connection()
-        assert not result.success  # 当前未实现
-        assert "Remote connection management not implemented" in result.message
+            result = devops_tools.cleanup_workspace(remote_config)
+            assert result.success
+            assert mock_execute.call_count == 2
+
+    def check_connection_status(self, remote_config: RemoteConfig) -> OperationResult:
+        """Check remote connection status"""
+        command = ["code", "--status"]
+        return self._execute_command(command)
+
+    def verify_workspace(self, remote_config: RemoteConfig, project_config: ProjectConfig) -> OperationResult:
+        """Verify workspace and project settings are correct"""
+        workspace_check = self._execute_command(["ls", remote_config.workspace_path])
+        if not workspace_check.success:
+            return workspace_check
+
+        git_check = self._execute_command(["git", "-C", remote_config.workspace_path, "status"])
+        if not git_check.success:
+            return git_check
+
+        return OperationResult(success=True)
+
+    def diagnose_environment(self, remote_config: RemoteConfig) -> OperationResult:
+        """Diagnose remote environment status"""
+        tools = ["git", "python", "node"]
+        results = {}
+
+        for tool in tools:
+            result = self._execute_command([tool, "--version"])
+            results[tool] = result.data["output"] if result.success else "Not found"
+
+        return OperationResult(success=True, data={"tools": results})

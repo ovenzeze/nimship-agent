@@ -3,9 +3,15 @@
     "description": "DevOps operations for deployment and environment management",
     "restricted": true,
     "capabilities": [
-        "push_changes",
-        "create_pull_request",
-        "deploy_environment",
-        "manage_remote_connection"
-    ]
+        "connect_remote",
+        "setup_workspace",
+        "check_connection_status",
+        "verify_workspace",
+        "diagnose_environment",
+        "cleanup_workspace"
+    ],
+    "logging": {
+        "enabled": true,
+        "level": "INFO"
+    }
 }

@@ -9,7 +9,8 @@
         "workflow_config_dir": "config/workflows",
         "tool_config_dir": "config/tools",
         "tools_dir": "tools",
-        "storage_dir": "tmp"
+        "storage_dir": "tmp",
+        "log_dir": "logs"
     },
     "tools": {
         "file_manager": {
@@ -22,7 +23,11 @@
         },
         "devops": {
             "restricted": true,
-            "allowed_agents": ["devops"]
+            "allowed_agents": ["devops"],
+            "retry_config": {
+                "max_retries": 3,
+                "retry_delay": 2
+            }
         }
     }
 }
