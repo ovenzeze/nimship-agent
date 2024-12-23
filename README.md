@@ -1,125 +1,150 @@
 # Nimship Agent
 
-Nimship Agent 是一个灵活的、可配置的 AI agent 框架，基于 phidata 库构建。
-
-PhiiData 是一个用于构建 AI 应用程序的库，它提供了一组工具和功能，使开发人员能够轻松地构建、部署和管理 AI 应用程序。
-
-文档导航文件: [docs/DOCUMENTATION_GUIDE.md](docs/DOCUMENTATION_GUIDE.md)
+Nimship Agent 是一个基于 phidata 构建的多 Agent 协作开发框架，支持可配置的工作流和智能工具链。
 
 ## 主要特性
 
-- 使用 JSON 配置文件定义agents和workflow，更易于管理和维护
-- 支持多种语言模型，包括 OpenAI、HuggingFace 和 Anthropic（PhiiData能力）
-- 支持多种工具，包括搜索引擎、计算器和日期工具（PhiiData能力）
-- 可扩展的工具集成，允许用户添加自己的工具
-- 美观的UI界面（PhiiData能力）
-- 支持无头模式运行, WebUI 运行，CLI交互式运行（PhiiData能力）
+### 多Agent协作系统
+- 预配置的专业角色：产品经理、技术负责人、高级工程师、测试工程师
+- 基于工作流的协作机制
+- 清晰的角色职责和任务分配
 
-## 安装
+### 灵活的配置系统
+- JSON 配置文件定义 agents 和 workflows
+- 标准化的配置验证机制
+- 支持多种语言模型（通过 phidata）Bedrock (Claude)
 
-1. 克隆仓库：
-   ```
-   git clone https://github.com/your-username/nimship-agent.git
-   cd nimship-agent
-   ```
+### 工具集成
+- 核心工具：
+   - FileManager：统一的文件操作接口
+   - DevOps：环境管理和部署操作
+   - DuckDuckGo：网络搜索能力
+- 可扩展的工具系统
+- 工具配置与实现分离
 
-2. 创建并激活虚拟环境：
-   ```
-   python3.9 -m venv venv
-   source venv/bin/activate
-   ```
-
-3. 安装依赖：
-   ```
-   pip install -r requirements.txt
-   ```
-
-   注意：确保所有依赖项都已正确安装，包括 paramiko 和 requests，这些库对于运行某些测试是必需的。
-
-## 测试
-
-运行测试套件：
-
-```
-pytest tests/
-```
-
-注意：
-- 某些测试可能需要额外的设置，如远程服务器配置。请查看 tests/test_remote_development.py 文件中的具体要求。
-- 如果 paramiko 或 requests 库未安装，相关的测试将被跳过，但不会导致测试失败。
+### 工作流管理
+- 状态驱动的工作流引擎
+- 配置化的状态转换
+- 完整的验证机制
+- 支持串行和并行执行
 
 ## 项目结构
 
-```
+```directory
 nimship-agent/
-├── agents/
+├── agents/                 # Agent 实现
+│   └── base_agent.py      # Agent 基类
 ├── config/
-├── docs/
-│   └── DOCUMENTATION_GUIDE.md
-├── scripts/
-│   └── run_agent.py
-├── tests/
-├── tools/
-│   └── litellm/
-├── utils/
-├── workflows/
-├── .env
-├── .gitignore
-├── DEV_GUIDE.md
-├── main.py
-├── playground.py
-├── README.md
-└── requirements.txt
+│   ├── agents/           # Agent 配置
+│   ├── workflows/        # 工作流配置
+│   └── tools/           # 工具配置
+│   └── system.config.json  # 系统配置
+├── docs/                 # 文档
+│   └── workflow_developer.md
+├── tests/               # 测试用例
+│   ├── integration/    # 集成测试
+│   └── test_workflow.py
+├── tools/              # 工具实现
+├── utils/              # 工具函数
+└── workflows/          # 工作流实现
+└── main.py               # 主程序入口
+└── README.md             # 项目说明
+└── requirements.txt      # 依赖包
 ```
+
+
+## 安装和配置
+
+1. 环境要求：
+   - Python 3.9+
+   - 虚拟环境管理工具
+
+2. 安装步骤：
+bash
+# 创建虚拟环境
+python3.9 -m venv venv
+source venv/bin/activate
+
+# 安装依赖
+pip install -r requirements.txt
+
+
+3. 环境配置：
+bash
+# 复制环境配置模板
+cp .env.example .env
+
+# 编辑 .env 文件，配置必要的环境变量：
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_REGION
+- PHI_API_KEY
+
 
 ## 使用方法
 
-1. 创建或编辑 agent 配置文件（例如 `config/example_agent.config.json`）
+### 1. CLI 模式
+bash
+python main.py
 
-2. 运行 agent：
-   ```
-   python scripts/run_agent.py config/example_agent.config.json "Your prompt here"
-   ```
 
-## 配置文件格式
+### 2. Web UI 模式
+bash
+python main.py --mode ui
 
-agent 配置文件应包含以下字段：
-
-- `name`: agent 的名称
-- `description`: agent 的描述
-- `model`: 包含 `type` 和 `name` 的对象，指定要使用的语言模型
-- `tools`: 要使用的工具列表
-
-示例：
-
-```json
-{
- "name": "example_agent",
- "description": "An example agent for demonstration",
- "model": {
-     "type": "openai",
-     "name": "gpt-3.5-turbo"
- },
- "tools": ["search", "calculator"]
-}
-```
 
 ## 开发指南
 
-有关开发和贡献的详细信息，请参阅项目根目录中的 `DEV_GUIDE.md` 文件。
+### Agent 配置规范
+- 配置文件位置：`config/` 目录
+- 文件后缀：`.agent.json`
+- 必需字段：name、description、model、tools
+
+### 工作流配置规范
+- 配置文件位置：`config/workflows/`
+- 文件后缀：`.workflow.json`
+- 必需定义：状态转换和条件
+
+### 测试规范
+- 单元测试：`tests/`
+- 集成测试：`tests/integration/`
+- 运行测试：`pytest tests/`
 
 ## 文档
 
-完整的文档可以在 `docs` 目录中找到。主要的文档导航文件是 [docs/DOCUMENTATION_GUIDE.md](docs/DOCUMENTATION_GUIDE.md)。
+- 工作流开发指南：`docs/workflow_developer.md`
+- Agent 设计文档：`docs/AGENT_DESIGN.md`
+- 测试架构：`tests/test_design.md`
 
-## 环境配置
+## 开发状态
 
-1. 配置远程开发环境:
-   - 确保远程机器已安装VSCode Server
-   - 配置SSH密钥认证
-   - 在远程机器上配置好Git和GitHub
+当前处于初始开发阶段：
+- ✅ 完成基础配置体系
+- ✅ 完成工作流框架设计
+- 🚧 实现核心功能模块
+- 🚧 完善测试覆盖
 
-2. 创建环境配置文件:
-   ```bash
-   cp .env.example .env
+## 注意事项
 
+1. 远程开发环境配置：
+   - 需要配置 VSCode Server
+   - 需要设置 SSH 密钥认证
+   - 需要配置 Git 和 GitHub
+
+2. 依赖说明：
+   - paramiko：用于远程操作
+   - requests：用于 API 调用
+   - pytest：用于测试
+   - python-dotenv：环境变量管理
+
+## 贡献指南
+
+1. Fork 项目
+2. 创建特性分支
+3. 提交更改
+4. 推送到分支
+5. 创建 Pull Request
+
+## 许可证
+
+[许可证类型]
