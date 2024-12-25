@@ -1,6 +1,6 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
+from typing import List, Dict, Any, Optional, Union
 from datetime import datetime
+from pydantic import BaseModel, Field, field_validator
 
 class AgentResponse(BaseModel):
     content: Optional[str] = None
@@ -11,17 +11,19 @@ class AgentResponse(BaseModel):
 class WorkflowStateData(BaseModel):
     project_name: str
     project_description: str
-    user_stories: List[str]
-    acceptance_criteria: List[str]
-    content: Optional[str] = None
+    user_stories: List[str] = Field(default_factory=list)
+    acceptance_criteria: List[str] = Field(default_factory=list)
+    content: Union[Dict[str, Any], str] = Field(default_factory=dict)
+    status: str = Field(default="pending")
     metadata: Dict[str, Any] = Field(default_factory=dict)
-    status: str = "pending"
-    last_updated: Optional[str] = None
-    
-    # 可选技术字段
-    technical_design: Optional[str] = None
-    implementation_plan: Optional[str] = None
-    code_complete: Optional[bool] = None
-    unit_tests: Optional[str] = None
-    test_results: Optional[str] = None
-    bug_report: Optional[str] = None
+    last_updated: Optional[datetime] = None
+
+    @field_validator('content', mode='before')
+    @classmethod
+    def validate_content(cls, v):
+        if isinstance(v, str):
+            return {
+                'raw_content': v,
+                'format': 'markdown' if '#' in v else 'text'
+            }
+        return v

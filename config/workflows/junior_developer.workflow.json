@@ -1,6 +1,7 @@
 {
     "name": "junior_developer_workflow",
-    "description": "适合初级开发者的简化版开发工作流，用于流程控制器测试",
+    "description": "适合初级开发者的简化版开发工作流",
+    "input_file": "inputs/junior_dev_default.json",
     "agents": [
         {
             "id": "product_manager",
@@ -21,6 +22,11 @@
             "id": "qa_engineer",
             "name": "QA Engineer",
             "config_path": "config/agents/qa_engineer.agent.json"
+        },
+        {
+            "id": "formatter",
+            "name": "Formatter Agent",
+            "config_path": "config/agents/formatter.agent.json"
         }
     ],
     "state_data": {

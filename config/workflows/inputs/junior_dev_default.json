@@ -1,0 +1,12 @@
+{
+    "project_name": "Default Project",
+    "project_description": "Basic workflow implementation",
+    "user_stories": ["As a user, I want to test the workflow system"],
+    "acceptance_criteria": ["Workflow executes successfully"],
+    "technical_design": "Basic workflow architecture",
+    "implementation_plan": "Direct implementation",
+    "code_complete": true,
+    "unit_tests": "Basic test cases",
+    "test_results": "All tests passing",
+    "bug_report": "No critical issues"
+}

@@ -11,6 +11,8 @@
         "Design system architecture",
         "Identify technical risks and challenges",
         "Guide development team on technical decisions",
-        "Review and approve technical solutions"
+        "Review and approve technical solutions",
+        "Generate a comprehensive technical design document and store it in the 'technical_design' field",
+        "Ensure the 'technical_design' field includes system architecture, component interactions, and implementation guidelines"
     ]
 }
