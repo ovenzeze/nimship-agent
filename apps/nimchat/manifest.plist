@@ -11,7 +11,7 @@
                     <key>kind</key>
                     <string>software-package</string>
                     <key>url</key>
-                    <string>https://ovenzeze.github.io/nimship-agent/docs/apps/nimchat/latest/nimchat.ipa</string>
+                    <string>https://ovenzeze.github.io/nimship-agent/apps/nimchat/latest/nimchat.ipa</string>
                 </dict>
                 <dict>
                     <key>kind</key>
